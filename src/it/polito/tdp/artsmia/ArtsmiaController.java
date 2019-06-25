@@ -6,6 +6,12 @@ package it.polito.tdp.artsmia;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
+
+import it.polito.tdp.artsmia.model.ArtObject;
+import it.polito.tdp.artsmia.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class ArtsmiaController {
+	private Model model;
 
 	@FXML // ResourceBundle that was given to the FXMLLoader
 	private ResourceBundle resources;
@@ -41,12 +48,39 @@ public class ArtsmiaController {
 
 	@FXML
 	void doAnalizzaOggetti(ActionEvent event) {
-		txtResult.setText("doAnalizzaOggetti");
+		if(this.btnAnalizzaOggetti.isArmed()) {
+			txtResult.clear();
+			model.CreaGrafo();
+			txtResult.appendText("grafo creato \n");
+			txtResult.appendText(model.numeroVertici()+"\n");
+		}
+			
 	}
 
 	@FXML
 	void doCalcolaComponenteConnessa(ActionEvent event) {
-		txtResult.setText("doCalcolaComponenteConnessa");
+		if(this.btnCalcolaComponenteConnessa.isArmed()) {
+			txtResult.clear();
+			try {
+				int id=Integer.parseInt(txtObjectId.getText());
+				if(model.numeroVertici()==0) {
+					txtResult.appendText("grafo non ancora creato");
+					return;
+				}
+				else {
+					if(model.controllanumero(id)==false) {
+						txtResult.appendText("il numero non esiste");
+					}
+					else {
+							txtResult.appendText("numero componenti connesse:  "+model.componenteConnessa(id)+"\n");
+					}
+				}
+				
+			}catch(NumberFormatException e) {
+				txtResult.appendText("formato non valido");
+				return;
+			}
+		}
 	}
 
 	@FXML
@@ -64,4 +98,9 @@ public class ArtsmiaController {
 		assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Artsmia.fxml'.";
 
 	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+	
 }
