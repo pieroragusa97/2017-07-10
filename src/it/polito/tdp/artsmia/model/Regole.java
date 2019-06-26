@@ -26,8 +26,8 @@ public class Regole {
 	 *             visited.add(dfv.next());
 	 *             }
 	 *           
-	 *MODEL    Creare DAO e Grafo fuori dai metodi con private e poi inizializzarli 
-	 *         nel costruttore 
+	 *MODEL    Creare DAO  fuori dai metodi con private e poi inizializzarli 
+	 *         nel costruttore , grafo dentro crea grafo
 	 * 
 	 *MODEL    Se ho due punti dotati di latitudine e longitudine posso calcolare la distanza,
 	 *         scegliendo l'unità di misura e usando LatLng
@@ -76,6 +76,9 @@ public class Regole {
 	 *CONTR    Controllare che un bottone non dipenda dalla creazione di un grafo
 	 *         mettere il controllo in questo caso
 	 *         
+	 *CONTR    Creare una box con string se c'è un valore predefinito + usare poi per la 
+	 *         conversione integer.parseint + try catch numberformat exception
+	 *         
 	 *DAO      Se dalla select esce un solo valore nel metododao mettere if anzichè while(rs.next)
 	 *
 	 *DAO      per avere relazioni in cui 2 oggetti abbiano qualcosa in comune, creare 
@@ -90,6 +93,12 @@ public class Regole {
 	 *           from tabella eventi1,tabella eventi2
 	 *           where ev1=ev2 and idoggetto1>idOggetto2(evito casi A-B e B-A)
 	 *           group by o1,o2 cosi prendo le coppie uguali
+	 *           
+	 *DAO      stare attento ai confronti e controllare che non ci siano campi null 
+	 *         dentro la tabella, in caso aggiungere per chi può i valorri senza costruttore 
+	 *         con metodi set
+	 *         
+	 *DAO      se un attributo LocalDate e lo deve prelevare da tabella, faccio rs.getdate().toLocalDate
 	 *           
 	 *SQL      in un metodo dao della query posso usare una parte di data, es. select year("data")
 	 *
