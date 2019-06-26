@@ -95,7 +95,112 @@ public class Regole {
 	 *
 	 *DB      dopo il db?serverTimezone=Europe/Rome" se ci sono prima user e password &&
 	 *         
-	 **/
+	 *
+	 *
+	 *RICORSIONE   es.
+	 *
+	 *public List<ArtObject> camminoMassimo(int startId, int LUN) { parte pubblica
+
+		// trova il vertice di partenza
+
+		ArtObject start = trovaVertice(startId);   vertice da cui devo partire
+
+
+
+		List<ArtObject> parziale = new ArrayList<>();
+
+		parziale.add(start);                      lista iniziale parziale che deve essere
+		                                          confrontata ad ogni passaggio
+
+
+
+		this.best = new ArrayList<>();
+                                                  lista migliore trovata
+		best.add(start);
+
+
+
+		cerca(parziale, 1, LUN);             inizia la ricorsione richiamando il metodo
+
+
+
+		return best;
+
+
+
+	}
+
+
+
+	private void cerca(List<ArtObject> parziale, int livello, int LUN) {
+
+		if (livello == LUN) {
+                                                               alla fine dovrò ritornare il caso migliore
+			// caso terminale
+
+			if (peso(parziale) > peso(best)) {
+
+				best = new ArrayList<>(parziale);
+
+				System.out.println(parziale);
+
+			}
+
+			return;
+
+		}
+
+
+
+		// trova vertici adiacenti all'ultimo
+
+		ArtObject ultimo = parziale.get(parziale.size() - 1);
+
+
+
+		List<ArtObject> adiacenti = Graphs.neighborListOf(this.graph, ultimo);
+
+
+
+		for (ArtObject prova : adiacenti) {
+
+			if (!parziale.contains(prova) && prova.getClassification() != null
+
+					&& prova.getClassification().equals(parziale.get(0).getClassification())) {
+
+				parziale.add(prova);
+                                                                 ricorsione vera e propria
+				cerca(parziale, livello + 1, LUN);
+
+				parziale.remove(parziale.size() - 1);
+
+			}
+
+		}
+
+
+
+	}
+
+
+
+	private int peso(List<ArtObject> parziale) {
+
+		int peso = 0;
+
+		for (int i = 0; i < parziale.size() - 1; i++) {
+
+			DefaultWeightedEdge e = graph.getEdge(parziale.get(i), parziale.get(i + 1));
+
+			int pesoarco = (int) graph.getEdgeWeight(e);
+
+			peso += pesoarco;
+
+		}
+
+		return peso;
+
+	}*/
 	
 
 }
